@@ -1,0 +1,207 @@
+:root {
+  --bg-dark: #07090E;
+  --bg-card: rgba(15, 20, 32, 0.75);
+  --bg-card-hover: rgba(22, 30, 48, 0.85);
+  --spider-red: #FF1E27;
+  --spider-red-glow: rgba(255, 30, 39, 0.4);
+  --spider-cyan: #00F0FF;
+  --spider-cyan-glow: rgba(0, 240, 255, 0.3);
+  --accent-gold: #FFB800;
+  --text-main: #F1F5F9;
+  --text-muted: #94A3B8;
+  --border-glow: rgba(255, 30, 39, 0.3);
+  --border-muted: rgba(255, 255, 255, 0.1);
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(255, 30, 39, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(0, 240, 255, 0.06) 0%, transparent 40%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Glassmorphism Card Utility */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-muted);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 30, 39, 0.4);
+}
+
+.glass-card-danger {
+  background: rgba(30, 10, 15, 0.85);
+  border: 1px solid rgba(255, 30, 39, 0.5);
+  box-shadow: 0 0 25px rgba(255, 30, 39, 0.25);
+}
+
+.glass-card-active {
+  background: rgba(10, 25, 35, 0.85);
+  border: 1px solid rgba(0, 240, 255, 0.5);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
+}
+
+/* SpiderSense SOS Panic Button */
+.sos-button-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sos-pulse-ring {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: var(--spider-red-glow);
+  animation: sos-ripple 2s infinite ease-out;
+}
+
+.sos-pulse-ring-outer {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 30, 39, 0.4);
+  animation: web-rotate 20s linear infinite;
+}
+
+.sos-button {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FF2E36 0%, #B30006 100%);
+  border: 4px solid #FFA0A4;
+  color: #FFF;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 2rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow: 
+    0 0 40px rgba(255, 30, 39, 0.8),
+    inset 0 4px 8px rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.sos-button:active {
+  transform: scale(0.94);
+  box-shadow: 0 0 20px rgba(255, 30, 39, 0.9);
+}
+
+@keyframes sos-ripple {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes web-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Badge & Tag Styling */
+.badge-spider {
+  background: rgba(255, 30, 39, 0.15);
+  color: var(--spider-red);
+  border: 1px solid rgba(255, 30, 39, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.badge-cyan {
+  background: rgba(0, 240, 255, 0.15);
+  color: var(--spider-cyan);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.badge-phase2 {
+  background: rgba(148, 163, 184, 0.15);
+  color: #94A3B8;
+  border: 1px dashed rgba(148, 163, 184, 0.4);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--spider-red);
+}
+
+/* Leaflet Map Overrides */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: #0B0E14 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #0F1420 !important;
+  color: #FFF !important;
+  border: 1px solid var(--border-glow);
+  border-radius: 8px !important;
+}
+
+.leaflet-popup-tip {
+  background: #0F1420 !important;
+}
