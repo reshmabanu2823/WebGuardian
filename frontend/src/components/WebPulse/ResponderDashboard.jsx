@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, MapPin, Radio, CheckCircle, UserCheck, AlertTriangle, ArrowRight, Phone } from 'lucide-react';
+import { Radio, MapPin, CheckCircle, ShieldCheck, Phone, ArrowRight, Activity, AlertOctagon } from 'lucide-react';
 import { fetchNearbyResponders, acceptEmergencyRequest, fetchResponderWebShieldView } from '../../services/api';
 
 export const ResponderDashboard = ({ activeRequest, onAcceptSuccess }) => {
@@ -37,7 +37,6 @@ export const ResponderDashboard = ({ activeRequest, onAcceptSuccess }) => {
       const res = await acceptEmergencyRequest(targetId, respId);
       setAcceptedState(res);
 
-      // Load victim's privacy-filtered WebShield medical profile
       if (activeRequest?.victim_id) {
         try {
           const sData = await fetchResponderWebShieldView(activeRequest.victim_id);
@@ -55,66 +54,92 @@ export const ResponderDashboard = ({ activeRequest, onAcceptSuccess }) => {
     }
   };
 
+  // Helper for WebAI Severity Level Indicator
+  const getSeverityBadge = (score = 85) => {
+    if (score >= 80) {
+      return (
+        <span className="flex items-center gap-1 text-[11px] font-extrabold text-[#A32633] bg-[#60262C]/50 px-2.5 py-0.5 border border-[#962333]">
+          🔴 CRITICAL (Score: {score})
+        </span>
+      );
+    } else if (score >= 40) {
+      return (
+        <span className="flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-amber-950/50 px-2.5 py-0.5 border border-amber-600/50">
+          🟠 MODERATE (Score: {score})
+        </span>
+      );
+    } else {
+      return (
+        <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-950/50 px-2.5 py-0.5 border border-emerald-600/50">
+          🟢 STABLE (Score: {score})
+        </span>
+      );
+    }
+  };
+
   return (
-    <div className="glass-card p-6 rounded-2xl flex flex-col gap-5 border border-slate-800">
-      <div className="flex flex-wrap justify-between items-center gap-3 border-b border-slate-800 pb-4">
+    <div className="wg-card p-6 flex flex-col gap-5">
+      {/* Top Header */}
+      <div className="flex flex-wrap justify-between items-center gap-3 border-b border-[#343339] pb-4">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-cyan-950/60 border border-cyan-500/40 rounded-xl text-cyan-400 shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+          <div className="p-2.5 bg-[#60262C] border border-[#962333] text-white">
             <Radio className="w-6 h-6 animate-pulse" />
           </div>
           <div>
-            <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              WebPulse Responder Radar
-              <span className="badge-cyan text-xs">PostGIS ST_DWithin Matcher</span>
+            <h3 className="text-xl font-extrabold text-white uppercase tracking-wider flex items-center gap-2">
+              WebPulse Spatial Dispatch Matrix
             </h3>
-            <p className="text-xs text-slate-400">Matching closest verified emergency responders from seeded database</p>
+            <p className="text-xs text-slate-400 font-mono">PostGIS ST_DWithin / ST_Distance Query Engine</p>
           </div>
         </div>
 
         <button
           onClick={loadNearbyResponders}
-          className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg border border-slate-700 transition"
+          className="btn-angular btn-angular-secondary px-3 py-1.5 text-xs"
         >
-          Refresh Spatial Query
+          Re-Scan PostGIS Matrix
         </button>
       </div>
 
       {acceptedState ? (
-        <div className="bg-emerald-950/40 border border-emerald-500/50 p-5 rounded-xl space-y-4">
+        <div className="bg-[#60262C]/40 border border-[#962333] p-5 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <CheckCircle className="w-8 h-8 text-emerald-400" />
               <div>
-                <h4 className="text-lg font-bold text-white">Emergency Request Accepted!</h4>
-                <p className="text-xs text-emerald-300">En-route status active via WebTrace WebSocket channel</p>
+                <h4 className="text-lg font-extrabold text-white uppercase">Dispatch Request Accepted</h4>
+                <p className="text-xs text-slate-300">En-route live tracking active via WebTrace WebSocket channel</p>
               </div>
             </div>
-            <span className="bg-emerald-500 text-slate-950 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
-              En Route
+            <span className="badge-angular-maroon text-xs">
+              EN ROUTE
             </span>
           </div>
 
           {/* Privacy-Filtered WebShield Card for Responder */}
-          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
-            <h5 className="text-xs font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4" /> Victim WebShield Emergency Card (Privacy Screened)
-            </h5>
+          <div className="bg-[#13171B] p-4 border border-[#343339] space-y-3">
+            <div className="flex justify-between items-center border-b border-[#343339] pb-2">
+              <h5 className="text-xs font-extrabold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-red-400" /> Victim WebShield Emergency Card (Privacy Screened)
+              </h5>
+              {getSeverityBadge(85)}
+            </div>
 
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="bg-slate-900 p-2.5 rounded border border-slate-800">
+              <div className="bg-[#20252C] p-2.5 border border-[#343339]">
                 <span className="text-slate-400 block">Victim Name:</span>
-                <span className="text-white font-bold">{acceptedState?.victim?.name || 'Mary Jane Watson'}</span>
+                <span className="text-white font-bold">{acceptedState?.victim?.name || 'Emergency Victim'}</span>
               </div>
-              <div className="bg-slate-900 p-2.5 rounded border border-slate-800">
+              <div className="bg-[#20252C] p-2.5 border border-[#343339]">
                 <span className="text-slate-400 block">Blood Type:</span>
                 <span className="text-red-400 font-bold">{shieldData?.blood_group || 'O Negative'}</span>
               </div>
             </div>
 
-            <div className="bg-slate-900 p-2.5 rounded border border-slate-800 text-xs">
-              <span className="text-slate-400 block mb-1">Medical Notes & Allergies:</span>
+            <div className="bg-[#20252C] p-2.5 border border-[#343339] text-xs">
+              <span className="text-slate-400 block mb-1">Clinical Notes & Allergies:</span>
               <p className="text-slate-200">
-                {shieldData?.medical_notes || 'Allergies: Penicillin | History of mild asthma; carries inhaler in jacket.'}
+                {shieldData?.medical_notes || 'Allergies: Penicillin | History of mild asthma; carries inhaler in jacket pocket.'}
               </p>
             </div>
           </div>
@@ -122,38 +147,42 @@ export const ResponderDashboard = ({ activeRequest, onAcceptSuccess }) => {
       ) : (
         <div className="space-y-3">
           <div className="flex justify-between items-center text-xs text-slate-400">
-            <span>Verified Responders Nearby ({responders.length} found)</span>
-            <span>Sorted by PostGIS ST_Distance</span>
+            <span>Candidate Response Units ({responders.length} active in matrix)</span>
+            <span className="font-mono">Sorted by PostGIS Distance</span>
           </div>
 
+          {/* Data-Dense List of Responders */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {responders.map((resp) => (
+            {responders.map((resp, idx) => (
               <div
                 key={resp.responder_id}
                 onClick={() => setSelectedResponder(resp)}
-                className={`p-4 rounded-xl border cursor-pointer transition flex flex-col justify-between gap-3 ${
+                className={`p-4 border cursor-pointer transition flex flex-col justify-between gap-3 ${
                   selectedResponder?.responder_id === resp.responder_id
-                    ? 'bg-slate-900 border-cyan-500 shadow-[0_0_20px_rgba(0,240,255,0.2)]'
-                    : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
+                    ? 'bg-[#13171B] border-[#962333] shadow-[0_0_20px_rgba(150,35,51,0.3)]'
+                    : 'bg-[#13171B] border-[#343339] hover:border-slate-600'
                 }`}
               >
                 <div>
-                  <div className="flex justify-between items-start mb-1">
-                    <h4 className="font-bold text-white text-sm flex items-center gap-1.5">
-                      <UserCheck className="w-4 h-4 text-cyan-400" />
+                  <div className="flex justify-between items-start mb-1.5">
+                    <h4 className="font-extrabold text-white text-sm uppercase tracking-wider flex items-center gap-1.5">
+                      <Activity className="w-4 h-4 text-red-400" />
                       {resp.full_name}
                     </h4>
-                    <span className="badge-cyan text-[10px]">{resp.responder_type}</span>
+                    {getSeverityBadge(idx === 0 ? 92 : idx === 1 ? 65 : 30)}
                   </div>
 
-                  <p className="text-xs text-slate-400 flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-red-400" />
-                    Distance: <strong className="text-cyan-400">{resp.distance_meters} meters</strong>
-                  </p>
+                  <div className="flex justify-between items-center text-xs text-slate-400 mt-2">
+                    <span className="flex items-center gap-1 font-mono">
+                      <MapPin className="w-3.5 h-3.5 text-red-400" />
+                      Distance: <strong className="text-white">{resp.distance_meters} meters</strong>
+                    </span>
+                    <span className="badge-angular-slate text-[10px]">{resp.responder_type}</span>
+                  </div>
                 </div>
 
-                <div className="flex justify-between items-center pt-2 border-t border-slate-800">
-                  <span className="text-xs text-slate-400 flex items-center gap-1">
+                <div className="flex justify-between items-center pt-2 border-t border-[#343339]">
+                  <span className="text-xs text-slate-400 flex items-center gap-1 font-mono">
                     <Phone className="w-3 h-3 text-slate-400" /> {resp.phone_number}
                   </span>
 
@@ -162,7 +191,7 @@ export const ResponderDashboard = ({ activeRequest, onAcceptSuccess }) => {
                       e.stopPropagation();
                       handleAcceptRequest(resp.responder_id);
                     }}
-                    className="flex items-center gap-1 px-3 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs rounded-lg transition shadow"
+                    className="btn-angular btn-angular-primary px-3 py-1.5 text-xs flex items-center gap-1"
                   >
                     Accept Alert <ArrowRight className="w-3.5 h-3.5" />
                   </button>

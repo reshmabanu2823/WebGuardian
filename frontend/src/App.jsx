@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Radio, Shield, MapPin, User, CheckCircle2, Zap, Layers, AlertCircle, PhoneCall } from 'lucide-react';
+import { Radio, Shield, Zap, Layers } from 'lucide-react';
 import { SpiderSenseButton } from './components/SpiderSense/SpiderSenseButton';
 import { LiveMapView } from './components/WebTrace/LiveMapView';
 import { WebShieldProfileCard } from './components/WebShield/WebShieldProfileCard';
@@ -12,7 +12,6 @@ export default function App() {
   const [activeRequest, setActiveRequest] = useState(null);
 
   useEffect(() => {
-    // Capture user geolocation if permitted by browser
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
@@ -33,19 +32,28 @@ export default function App() {
     setActiveRequest(sosData);
   };
 
+  // Dynamically isolate background web texture to Home SOS tab only
+  const backgroundClass = activeTab === 'VICTIM' ? 'bg-web-texture' : 'bg-clean-charcoal';
+
   return (
-    <div className="min-h-screen flex flex-col justify-between text-slate-100">
-      {/* Top Navigation Bar */}
-      <header className="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50 px-4 py-3">
+    <div className={`min-h-screen flex flex-col justify-between text-slate-100 ${backgroundClass}`}>
+      {/* Top Header with Original Geometric Emblem */}
+      <header className="border-b border-[#343339] bg-[#13171B]/95 backdrop-blur-md sticky top-0 z-50 px-4 py-3">
         <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center text-white font-extrabold shadow-[0_0_20px_rgba(255,30,39,0.5)] border border-red-400">
-              🕸️
+            {/* Original Geometric Network Emblem SVG */}
+            <div className="w-10 h-10 bg-[#60262C] border border-[#962333] flex items-center justify-center text-white" style={{ clipPath: 'polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px), 0% 8px)' }}>
+              <svg className="w-6 h-6 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                <polyline points="2 17 12 22 22 17" />
+                <polyline points="2 12 12 17 22 12" />
+              </svg>
             </div>
+
             <div>
-              <h1 className="text-xl font-extrabold tracking-tight text-white flex items-center gap-2">
+              <h1 className="text-xl font-extrabold tracking-tight text-white flex items-center gap-2 uppercase">
                 WebGuardian
-                <span className="text-xs bg-red-950 text-red-400 border border-red-500/40 px-2 py-0.5 rounded-full font-bold">
+                <span className="badge-angular-maroon text-[10px]">
                   Phase 1 MVP
                 </span>
               </h1>
@@ -54,57 +62,56 @@ export default function App() {
           </div>
 
           {/* Role / Tab Navigation Buttons */}
-          <nav className="flex items-center gap-1.5 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 text-xs">
+          <nav className="flex items-center gap-1.5 bg-[#20252C] p-1.5 border border-[#343339] text-xs">
             <button
               onClick={() => setActiveTab('VICTIM')}
-              className={`px-3.5 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 ${
+              className={`btn-angular px-3.5 py-1.5 text-xs flex items-center gap-1.5 ${
                 activeTab === 'VICTIM'
-                  ? 'bg-red-600 text-white shadow-[0_0_15px_rgba(255,30,39,0.4)]'
+                  ? 'bg-[#962333] text-white shadow-[0_0_15px_rgba(150,35,51,0.5)]'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Radio className="w-3.5 h-3.5" /> Victim SOS Portal
+              <Radio className="w-3.5 h-3.5" /> SOS Panic Portal
             </button>
 
             <button
               onClick={() => setActiveTab('RESPONDER')}
-              className={`px-3.5 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 ${
+              className={`btn-angular px-3.5 py-1.5 text-xs flex items-center gap-1.5 ${
                 activeTab === 'RESPONDER'
-                  ? 'bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(0,240,255,0.4)]'
+                  ? 'bg-[#343339] text-white border border-[#962333]'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Zap className="w-3.5 h-3.5" /> WebPulse Responders
+              <Zap className="w-3.5 h-3.5 text-red-400" /> WebPulse Responders
             </button>
 
             <button
               onClick={() => setActiveTab('SHIELD')}
-              className={`px-3.5 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 ${
+              className={`btn-angular px-3.5 py-1.5 text-xs flex items-center gap-1.5 ${
                 activeTab === 'SHIELD'
-                  ? 'bg-slate-800 text-white border border-slate-600'
+                  ? 'bg-[#343339] text-white border border-slate-600'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Shield className="w-3.5 h-3.5 text-red-400" /> WebShield Profile
+              <Shield className="w-3.5 h-3.5 text-slate-400" /> WebShield Profile
             </button>
 
             <button
               onClick={() => setActiveTab('STUBS')}
-              className={`px-3.5 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 ${
+              className={`btn-angular px-3.5 py-1.5 text-xs flex items-center gap-1.5 ${
                 activeTab === 'STUBS'
-                  ? 'bg-purple-950 text-purple-300 border border-purple-500/40'
+                  ? 'bg-[#60262C] text-red-200 border border-[#962333]'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Layers className="w-3.5 h-3.5 text-purple-400" /> Phase 2 TODOs
+              <Layers className="w-3.5 h-3.5 text-red-400" /> Phase 2 Roadmap
             </button>
           </nav>
         </div>
       </header>
 
-      {/* Main App Container */}
+      {/* Main Container */}
       <main className="max-w-7xl mx-auto w-full px-4 py-6 space-y-6 flex-1">
-        {/* Victim SOS Mode */}
         {activeTab === 'VICTIM' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div className="lg:col-span-5 flex flex-col justify-center">
@@ -118,7 +125,6 @@ export default function App() {
           </div>
         )}
 
-        {/* Responder Radar Mode */}
         {activeTab === 'RESPONDER' && (
           <div className="space-y-6">
             <ResponderDashboard
@@ -129,14 +135,12 @@ export default function App() {
           </div>
         )}
 
-        {/* WebShield Privacy Settings Mode */}
         {activeTab === 'SHIELD' && (
           <div className="max-w-4xl mx-auto space-y-6">
             <WebShieldProfileCard />
           </div>
         )}
 
-        {/* Phase 2 TODO Preview Mode */}
         {activeTab === 'STUBS' && (
           <div className="max-w-5xl mx-auto space-y-6">
             <Phase2PreviewCards />
@@ -145,9 +149,9 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950/90 py-4 px-4 text-center text-xs text-slate-500">
+      <footer className="border-t border-[#343339] bg-[#13171B] py-4 px-4 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
-          <span>WebGuardian Emergency Network — Spider-Man Inspired Safety Platform</span>
+          <span className="uppercase tracking-wider">WebGuardian Emergency Response Platform</span>
           <span className="font-mono text-[11px]">PostGIS • FastAPI • React • WebSockets</span>
         </div>
       </footer>

@@ -1,18 +1,48 @@
 :root {
-  --bg-dark: #07090E;
-  --bg-card: rgba(15, 20, 32, 0.75);
-  --bg-card-hover: rgba(22, 30, 48, 0.85);
-  --spider-red: #FF1E27;
-  --spider-red-glow: rgba(255, 30, 39, 0.4);
-  --spider-cyan: #00F0FF;
-  --spider-cyan-glow: rgba(0, 240, 255, 0.3);
-  --accent-gold: #FFB800;
-  --text-main: #F1F5F9;
-  --text-muted: #94A3B8;
-  --border-glow: rgba(255, 30, 39, 0.3);
-  --border-muted: rgba(255, 255, 255, 0.1);
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  /* WebGuardian Official Color Tokens */
+  --wg-maroon-dark: #60262C;   /* deep muted red — backgrounds, cards */
+  --wg-red-primary: #962333;   /* primary accent — alerts, CTAs */
+  --wg-red-bright: #A32633;    /* active/critical states, SOS hero button */
+  --wg-slate: #343339;         /* secondary surfaces, borders */
+  --wg-charcoal: #20252C;      /* base background */
+  --wg-black: #13171B;         /* deepest background, text on light */
+
+  /* Neutral Text Tokens */
+  --wg-text-primary: #F8FAFC;
+  --wg-text-secondary: #94A3B8;
+  --wg-text-dim: #64748B;
+
+  /* WebAI Severity Coding */
+  --wg-severity-high: #A32633;  /* 🔴 Critical Level (80-100) */
+  --wg-severity-med: #D97706;   /* 🟠 Moderate Level (40-79) */
+  --wg-severity-low: #059669;   /* 🟢 Low / Stable Level (1-39) */
+
+  /* Typography Scale */
+  --wg-font-display: 'Outfit', sans-serif;
+  --wg-font-body: 'Inter', sans-serif;
+
+  --wg-fs-xs: 0.75rem;     /* 12px */
+  --wg-fs-sm: 0.875rem;    /* 14px */
+  --wg-fs-base: 1rem;      /* 16px */
+  --wg-fs-lg: 1.125rem;    /* 18px */
+  --wg-fs-xl: 1.25rem;     /* 20px */
+  --wg-fs-2xl: 1.5rem;     /* 24px */
+  --wg-fs-3xl: 2rem;       /* 32px */
+  --wg-fs-hero: 3.5rem;    /* 56px */
+
+  /* Spacing Scale (4px baseline grid) */
+  --wg-space-1: 0.25rem;   /* 4px */
+  --wg-space-2: 0.5rem;    /* 8px */
+  --wg-space-3: 0.75rem;   /* 12px */
+  --wg-space-4: 1rem;      /* 16px */
+  --wg-space-6: 1.5rem;    /* 24px */
+  --wg-space-8: 2rem;      /* 32px */
+  --wg-space-12: 3rem;     /* 48px */
+
+  /* Sharp Angular Geometry & Chamfers */
+  --wg-border-width: 1px;
+  --wg-clip-chamfer: polygon(10px 0%, calc(100% - 10px) 0%, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0% calc(100% - 10px), 0% 10px);
+  --wg-clip-btn: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
 }
 
 * {
@@ -22,186 +52,228 @@
 }
 
 body {
-  background-color: var(--bg-dark);
-  color: var(--text-main);
-  font-family: var(--font-body);
+  background-color: var(--wg-charcoal);
+  color: var(--wg-text-primary);
+  font-family: var(--wg-font-body);
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+/* Home / Idle Background Web-Line Texture (Radiating Network Overlay) */
+.bg-web-texture {
+  background-color: var(--wg-charcoal);
   background-image: 
-    radial-gradient(circle at 20% 20%, rgba(255, 30, 39, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(0, 240, 255, 0.06) 0%, transparent 40%),
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+    radial-gradient(circle at center, rgba(150, 35, 51, 0.08) 0%, transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%2360262C' stroke-width='0.75' stroke-opacity='0.25'%3E%3Ccircle cx='200' cy='200' r='40'/%3E%3Ccircle cx='200' cy='200' r='90'/%3E%3Ccircle cx='200' cy='200' r='140'/%3E%3Ccircle cx='200' cy='200' r='190'/%3E%3Cline x1='200' y1='0' x2='200' y2='400'/%3E%3Cline x1='0' y1='200' x2='400' y2='200'/%3E%3Cline x1='58' y1='58' x2='342' y2='342'/%3E%3Cline x1='342' y1='58' x2='58' y2='342'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: cover, 400px 400px;
+  background-position: center;
+}
+
+/* Clean background without texture for data-dense screens */
+.bg-clean-charcoal {
+  background-color: var(--wg-charcoal);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
+  font-family: var(--wg-font-display);
+  letter-spacing: -0.02em;
 }
 
-/* Glassmorphism Card Utility */
-.glass-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-muted);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Sharp Angular Card Utility */
+.wg-card {
+  background: var(--wg-black);
+  border: var(--wg-border-width) solid var(--wg-slate);
+  clip-path: var(--wg-clip-chamfer);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.glass-card:hover {
-  border-color: rgba(255, 30, 39, 0.4);
+.wg-card:hover {
+  border-color: rgba(150, 35, 51, 0.5);
 }
 
-.glass-card-danger {
-  background: rgba(30, 10, 15, 0.85);
-  border: 1px solid rgba(255, 30, 39, 0.5);
-  box-shadow: 0 0 25px rgba(255, 30, 39, 0.25);
+.wg-card-danger {
+  background: linear-gradient(135deg, #1D1417 0%, var(--wg-black) 100%);
+  border: var(--wg-border-width) solid var(--wg-red-primary);
+  box-shadow: 0 0 25px rgba(163, 38, 51, 0.3);
 }
 
-.glass-card-active {
-  background: rgba(10, 25, 35, 0.85);
-  border: 1px solid rgba(0, 240, 255, 0.5);
-  box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
+.wg-card-clinical {
+  background: var(--wg-black);
+  border: var(--wg-border-width) solid var(--wg-slate);
 }
 
-/* SpiderSense SOS Panic Button */
-.sos-button-wrapper {
+.wg-card-clinical:hover {
+  border-color: #475569;
+}
+
+/* Isolated Hero SOS Panic Button */
+.sos-hero-wrapper {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 2rem 0;
 }
 
-.sos-pulse-ring {
+.sos-hero-pulse-ring {
   position: absolute;
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  background: var(--spider-red-glow);
-  animation: sos-ripple 2s infinite ease-out;
+  width: 260px;
+  height: 260px;
+  clip-path: var(--wg-clip-chamfer);
+  background: rgba(163, 38, 51, 0.25);
+  animation: sos-chamfer-ripple 2.4s infinite cubic-bezier(0, 0.2, 0.8, 1);
 }
 
-.sos-pulse-ring-outer {
+.sos-hero-pulse-ring-outer {
   position: absolute;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  border: 2px dashed rgba(255, 30, 39, 0.4);
-  animation: web-rotate 20s linear infinite;
+  width: 320px;
+  height: 320px;
+  border: 1px dashed rgba(163, 38, 51, 0.4);
+  clip-path: var(--wg-clip-chamfer);
+  animation: radar-rotate 25s linear infinite;
 }
 
-.sos-button {
+.sos-hero-trigger {
   position: relative;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #FF2E36 0%, #B30006 100%);
-  border: 4px solid #FFA0A4;
-  color: #FFF;
-  font-family: var(--font-heading);
+  width: 200px;
+  height: 200px;
+  clip-path: var(--wg-clip-chamfer);
+  background: linear-gradient(135deg, var(--wg-red-bright) 0%, var(--wg-maroon-dark) 100%);
+  border: none;
+  color: #FFFFFF;
+  font-family: var(--wg-font-display);
   font-weight: 900;
-  font-size: 2rem;
-  letter-spacing: 2px;
+  font-size: 2.5rem;
+  letter-spacing: 3px;
   cursor: pointer;
   box-shadow: 
-    0 0 40px rgba(255, 30, 39, 0.8),
-    inset 0 4px 8px rgba(255, 255, 255, 0.4);
+    0 0 50px rgba(163, 38, 51, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
   user-select: none;
+  z-index: 10;
 }
 
-.sos-button:active {
+.sos-hero-trigger:active {
   transform: scale(0.94);
-  box-shadow: 0 0 20px rgba(255, 30, 39, 0.9);
+  box-shadow: 0 0 25px rgba(163, 38, 51, 0.9);
 }
 
-@keyframes sos-ripple {
+@keyframes sos-chamfer-ripple {
   0% {
     transform: scale(0.85);
     opacity: 0.9;
   }
   100% {
-    transform: scale(1.4);
+    transform: scale(1.35);
     opacity: 0;
   }
 }
 
-@keyframes web-rotate {
+@keyframes radar-rotate {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-/* Badge & Tag Styling */
-.badge-spider {
-  background: rgba(255, 30, 39, 0.15);
-  color: var(--spider-red);
-  border: 1px solid rgba(255, 30, 39, 0.3);
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
+/* Angular Button & Badge Utilities */
+.btn-angular {
+  clip-path: var(--wg-clip-btn);
+  font-family: var(--wg-font-display);
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  transition: all 0.15s ease;
 }
 
-.badge-cyan {
-  background: rgba(0, 240, 255, 0.15);
-  color: var(--spider-cyan);
-  border: 1px solid rgba(0, 240, 255, 0.3);
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+.btn-angular-primary {
+  background: var(--wg-red-primary);
+  color: #FFFFFF;
 }
 
-.badge-phase2 {
-  background: rgba(148, 163, 184, 0.15);
-  color: #94A3B8;
-  border: 1px dashed rgba(148, 163, 184, 0.4);
-  padding: 4px 12px;
-  border-radius: 20px;
+.btn-angular-primary:hover {
+  background: var(--wg-red-bright);
+  box-shadow: 0 0 20px rgba(163, 38, 51, 0.5);
+}
+
+.btn-angular-secondary {
+  background: var(--wg-slate);
+  color: var(--wg-text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-angular-secondary:hover {
+  background: #403E46;
+}
+
+.badge-angular-maroon {
+  background: var(--wg-maroon-dark);
+  color: #F8FAFC;
+  border: 1px solid var(--wg-red-primary);
+  padding: 3px 10px;
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  clip-path: var(--wg-clip-btn);
+}
+
+.badge-angular-slate {
+  background: var(--wg-slate);
+  color: var(--wg-text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3px 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  clip-path: var(--wg-clip-btn);
 }
 
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-dark);
+  background: var(--wg-black);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
+  background: var(--wg-slate);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--spider-red);
+  background: var(--wg-red-primary);
 }
 
-/* Leaflet Map Overrides */
+/* Leaflet Dark HUD Map Overrides */
 .leaflet-container {
   width: 100%;
   height: 100%;
-  border-radius: 12px;
-  background: #0B0E14 !important;
+  border-radius: 0px;
+  background: #13171B !important;
 }
 
 .leaflet-popup-content-wrapper {
-  background: #0F1420 !important;
+  background: #13171B !important;
   color: #FFF !important;
-  border: 1px solid var(--border-glow);
-  border-radius: 8px !important;
+  border: 1px solid var(--wg-slate);
+  border-radius: 0px !important;
 }
 
 .leaflet-popup-tip {
-  background: #0F1420 !important;
+  background: #13171B !important;
+}
+
+/* Animated Pulsing Web Polyline Stream */
+@keyframes web-polyline-pulse {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -40; }
+}
+
+.leaflet-interactive[stroke="#A32633"], 
+.leaflet-interactive[stroke="#962333"] {
+  animation: web-polyline-pulse 1.5s linear infinite;
 }
