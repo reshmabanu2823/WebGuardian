@@ -1,279 +1,120 @@
-:root {
-  /* WebGuardian Official Color Tokens */
-  --wg-maroon-dark: #60262C;   /* deep muted red — backgrounds, cards */
-  --wg-red-primary: #962333;   /* primary accent — alerts, CTAs */
-  --wg-red-bright: #A32633;    /* active/critical states, SOS hero button */
-  --wg-slate: #343339;         /* secondary surfaces, borders */
-  --wg-charcoal: #20252C;      /* base background */
-  --wg-black: #13171B;         /* deepest background, text on light */
+@import "tailwindcss";
 
-  /* Neutral Text Tokens */
-  --wg-text-primary: #F8FAFC;
-  --wg-text-secondary: #94A3B8;
-  --wg-text-dim: #64748B;
-
-  /* WebAI Severity Coding */
-  --wg-severity-high: #A32633;  /* 🔴 Critical Level (80-100) */
-  --wg-severity-med: #D97706;   /* 🟠 Moderate Level (40-79) */
-  --wg-severity-low: #059669;   /* 🟢 Low / Stable Level (1-39) */
-
-  /* Typography Scale */
-  --wg-font-display: 'Outfit', sans-serif;
-  --wg-font-body: 'Inter', sans-serif;
-
-  --wg-fs-xs: 0.75rem;     /* 12px */
-  --wg-fs-sm: 0.875rem;    /* 14px */
-  --wg-fs-base: 1rem;      /* 16px */
-  --wg-fs-lg: 1.125rem;    /* 18px */
-  --wg-fs-xl: 1.25rem;     /* 20px */
-  --wg-fs-2xl: 1.5rem;     /* 24px */
-  --wg-fs-3xl: 2rem;       /* 32px */
-  --wg-fs-hero: 3.5rem;    /* 56px */
-
-  /* Spacing Scale (4px baseline grid) */
-  --wg-space-1: 0.25rem;   /* 4px */
-  --wg-space-2: 0.5rem;    /* 8px */
-  --wg-space-3: 0.75rem;   /* 12px */
-  --wg-space-4: 1rem;      /* 16px */
-  --wg-space-6: 1.5rem;    /* 24px */
-  --wg-space-8: 2rem;      /* 32px */
-  --wg-space-12: 3rem;     /* 48px */
-
-  /* Sharp Angular Geometry & Chamfers */
-  --wg-border-width: 1px;
-  --wg-clip-chamfer: polygon(10px 0%, calc(100% - 10px) 0%, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0% calc(100% - 10px), 0% 10px);
-  --wg-clip-btn: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background-color: var(--wg-charcoal);
-  color: var(--wg-text-primary);
-  font-family: var(--wg-font-body);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* Home / Idle Background Web-Line Texture (Radiating Network Overlay) */
-.bg-web-texture {
-  background-color: var(--wg-charcoal);
-  background-image: 
-    radial-gradient(circle at center, rgba(150, 35, 51, 0.08) 0%, transparent 70%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%2360262C' stroke-width='0.75' stroke-opacity='0.25'%3E%3Ccircle cx='200' cy='200' r='40'/%3E%3Ccircle cx='200' cy='200' r='90'/%3E%3Ccircle cx='200' cy='200' r='140'/%3E%3Ccircle cx='200' cy='200' r='190'/%3E%3Cline x1='200' y1='0' x2='200' y2='400'/%3E%3Cline x1='0' y1='200' x2='400' y2='200'/%3E%3Cline x1='58' y1='58' x2='342' y2='342'/%3E%3Cline x1='342' y1='58' x2='58' y2='342'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: cover, 400px 400px;
-  background-position: center;
-}
-
-/* Clean background without texture for data-dense screens */
-.bg-clean-charcoal {
-  background-color: var(--wg-charcoal);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--wg-font-display);
-  letter-spacing: -0.02em;
-}
-
-/* Sharp Angular Card Utility */
-.wg-card {
-  background: var(--wg-black);
-  border: var(--wg-border-width) solid var(--wg-slate);
-  clip-path: var(--wg-clip-chamfer);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-  transition: border-color 0.2s ease, transform 0.2s ease;
-}
-
-.wg-card:hover {
-  border-color: rgba(150, 35, 51, 0.5);
-}
-
-.wg-card-danger {
-  background: linear-gradient(135deg, #1D1417 0%, var(--wg-black) 100%);
-  border: var(--wg-border-width) solid var(--wg-red-primary);
-  box-shadow: 0 0 25px rgba(163, 38, 51, 0.3);
-}
-
-.wg-card-clinical {
-  background: var(--wg-black);
-  border: var(--wg-border-width) solid var(--wg-slate);
-}
-
-.wg-card-clinical:hover {
-  border-color: #475569;
-}
-
-/* Isolated Hero SOS Panic Button */
-.sos-hero-wrapper {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 2rem 0;
-}
-
-.sos-hero-pulse-ring {
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  clip-path: var(--wg-clip-chamfer);
-  background: rgba(163, 38, 51, 0.25);
-  animation: sos-chamfer-ripple 2.4s infinite cubic-bezier(0, 0.2, 0.8, 1);
-}
-
-.sos-hero-pulse-ring-outer {
-  position: absolute;
-  width: 320px;
-  height: 320px;
-  border: 1px dashed rgba(163, 38, 51, 0.4);
-  clip-path: var(--wg-clip-chamfer);
-  animation: radar-rotate 25s linear infinite;
-}
-
-.sos-hero-trigger {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  clip-path: var(--wg-clip-chamfer);
-  background: linear-gradient(135deg, var(--wg-red-bright) 0%, var(--wg-maroon-dark) 100%);
-  border: none;
-  color: #FFFFFF;
-  font-family: var(--wg-font-display);
-  font-weight: 900;
-  font-size: 2.5rem;
-  letter-spacing: 3px;
-  cursor: pointer;
-  box-shadow: 
-    0 0 50px rgba(163, 38, 51, 0.8),
-    inset 0 2px 4px rgba(255, 255, 255, 0.3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  user-select: none;
-  z-index: 10;
-}
-
-.sos-hero-trigger:active {
-  transform: scale(0.94);
-  box-shadow: 0 0 25px rgba(163, 38, 51, 0.9);
-}
-
-@keyframes sos-chamfer-ripple {
-  0% {
-    transform: scale(0.85);
-    opacity: 0.9;
+@layer base {
+  body {
+    background-color: #13171B;
+    color: #f4dddd;
+    font-family: 'Inter', sans-serif;
   }
-  100% {
-    transform: scale(1.35);
-    opacity: 0;
+
+  code, kbd, samp, pre {
+    font-family: 'JetBrains Mono', monospace;
   }
 }
 
-@keyframes radar-rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.font-mono-tech {
+  font-family: 'JetBrains Mono', monospace;
 }
 
-/* Angular Button & Badge Utilities */
-.btn-angular {
-  clip-path: var(--wg-clip-btn);
-  font-family: var(--wg-font-display);
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: all 0.15s ease;
+.bg-level-1 {
+  background-color: #20252C;
 }
 
-.btn-angular-primary {
-  background: var(--wg-red-primary);
-  color: #FFFFFF;
+.border-level-2 {
+  border: 1px solid #343339;
 }
 
-.btn-angular-primary:hover {
-  background: var(--wg-red-bright);
-  box-shadow: 0 0 20px rgba(163, 38, 51, 0.5);
+.border-alert {
+  border: 2px solid #962333;
 }
 
-.btn-angular-secondary {
-  background: var(--wg-slate);
-  color: var(--wg-text-primary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* SOS Pulsing Ring Animation */
+.sos-button {
+  background-color: #A32633;
+  box-shadow: 0 0 0 4px rgba(163, 38, 51, 0.4);
+  animation: pulse-ring 2s infinite;
 }
 
-.btn-angular-secondary:hover {
-  background: #403E46;
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(163, 38, 51, 0.8); }
+  70% { box-shadow: 0 0 0 24px rgba(163, 38, 51, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(163, 38, 51, 0); }
 }
 
-.badge-angular-maroon {
-  background: var(--wg-maroon-dark);
-  color: #F8FAFC;
-  border: 1px solid var(--wg-red-primary);
-  padding: 3px 10px;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  clip-path: var(--wg-clip-btn);
+/* Radar & Tactical Grid Patterns */
+.tactical-grid-bg {
+  background-image: radial-gradient(circle at center, #1c1011 0%, #13171B 100%);
+  position: relative;
 }
 
-.badge-angular-slate {
-  background: var(--wg-slate);
-  color: var(--wg-text-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 3px 10px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  clip-path: var(--wg-clip-btn);
+.tactical-grid-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(255,255,255,0.015) 12px, rgba(255,255,255,0.015) 13px),
+                    repeating-linear-gradient(-45deg, transparent, transparent 12px, rgba(255,255,255,0.015) 12px, rgba(255,255,255,0.015) 13px);
+  pointer-events: none;
 }
 
-/* Custom Scrollbars */
+.scanline {
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.3)
+  );
+  background-size: 100% 4px;
+}
+
+/* Custom Scrollbar for Tactical Vibe */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--wg-black);
+  background: #13171B;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--wg-slate);
+  background: #343339;
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--wg-red-primary);
+  background: #962333;
 }
 
-/* Leaflet Dark HUD Map Overrides */
-.leaflet-container {
-  width: 100%;
-  height: 100%;
-  border-radius: 0px;
-  background: #13171B !important;
+/* Marvel Cyber Spider-Web Accents */
+.spider-web-glow {
+  box-shadow: 0 0 20px rgba(255, 59, 83, 0.25), inset 0 0 10px rgba(150, 35, 51, 0.3);
 }
 
-.leaflet-popup-content-wrapper {
-  background: #13171B !important;
-  color: #FFF !important;
-  border: 1px solid var(--wg-slate);
-  border-radius: 0px !important;
+.spider-web-card {
+  position: relative;
 }
 
-.leaflet-popup-tip {
-  background: #13171B !important;
+.spider-web-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  border-top: 2px solid #ff3b53;
+  border-right: 2px solid #ff3b53;
+  pointer-events: none;
+  opacity: 0.8;
 }
 
-/* Animated Pulsing Web Polyline Stream */
-@keyframes web-polyline-pulse {
-  0% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: -40; }
+.spider-web-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-bottom: 2px solid #ff3b53;
+  border-left: 2px solid #ff3b53;
+  pointer-events: none;
+  opacity: 0.8;
 }
 
-.leaflet-interactive[stroke="#A32633"], 
-.leaflet-interactive[stroke="#962333"] {
-  animation: web-polyline-pulse 1.5s linear infinite;
-}
