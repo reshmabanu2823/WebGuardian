@@ -191,7 +191,7 @@ export const LiveMapView = ({ activeRequest }) => {
                   </p>
                 </div>
               </Popup>
-            </Popup>
+            </Marker>
           )}
 
           {/* Pulsing Web Strand Line Connecting Victim & Responder */}
