@@ -58,8 +58,7 @@ def get_user_medical_profile(
     except Exception as e:
         print(f"[WebShield API] DB query fallback: {e}")
 
-    # Fallback response if DB offline
-    return MOCK_FALLBACK_PROFILE
+    return MedicalProfileResponse(**MOCK_FALLBACK_PROFILE)
 
 @router.put("/profile", response_model=MedicalProfileResponse)
 def update_user_medical_profile(
@@ -89,22 +88,17 @@ def update_user_medical_profile(
     except Exception as e:
         print(f"[WebShield API] DB update fallback: {e}")
 
-    # Update in memory fallback
     for field, val in payload.model_dump(exclude_unset=True).items():
         if field in MOCK_FALLBACK_PROFILE:
             MOCK_FALLBACK_PROFILE[field] = val
 
-    return MOCK_FALLBACK_PROFILE
+    return MedicalProfileResponse(**MOCK_FALLBACK_PROFILE)
 
 @router.get("/victim/{victim_id}", response_model=ResponderViewWebShield)
 def get_responder_shield_view(
     victim_id: UUID,
     db: Session = Depends(get_db)
 ):
-    """
-    WebShield Privacy Engine:
-    Returns victim medical information to en-route responder FILTERED strictly by the victim's privacy choices.
-    """
     try:
         victim = db.query(User).filter(User.id == victim_id).first()
         if victim:
@@ -137,7 +131,6 @@ def get_responder_shield_view(
     except Exception as e:
         print(f"[WebShield API] Responder view DB fallback: {e}")
 
-    # Fallback privacy filtered view
     return ResponderViewWebShield(
         victim_name="Mary Jane Watson",
         victim_phone="+1-555-0100",
