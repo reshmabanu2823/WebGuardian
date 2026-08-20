@@ -16,7 +16,7 @@ export const CommandCentralView: React.FC<CommandCentralViewProps> = ({
   const [activePin, setActivePin] = useState<SignalItem | null>(null);
 
   // Live Uptime counter
-  const [uptimeSeconds, setUptimeSeconds] = useState(519790); // ~144:23:10 in seconds
+  const [uptimeSeconds, setUptimeSeconds] = useState(519790);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -62,11 +62,11 @@ export const CommandCentralView: React.FC<CommandCentralViewProps> = ({
   const getLevelBadgeClass = (level: SignalLevel) => {
     switch (level) {
       case 'L1':
-        return 'bg-[#962333] text-white font-bold';
+        return 'bg-[#962333] text-white font-bold border border-[#ffb3b5]';
       case 'L2':
-        return 'bg-[#8d1425] text-[#ffacaf] font-bold';
+        return 'bg-[#8d1425] text-[#ffacaf] font-bold border border-[#7c3c42]';
       case 'L3':
-        return 'bg-[#3f3132] text-[#debfbf]';
+        return 'bg-[#3f3132] text-[#debfbf] border border-[#574142]';
     }
   };
 
@@ -81,44 +81,53 @@ export const CommandCentralView: React.FC<CommandCentralViewProps> = ({
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 md:px-8 pt-20 pb-12 space-y-8 font-sans">
-      {/* Top Header & Uptime */}
+      {/* Top Header & System Telemetry Status */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#343339] pb-4">
         <div>
-          <h1 className="font-mono-tech text-3xl md:text-4xl font-extrabold tracking-tight text-white uppercase">
+          <div className="font-mono-tech text-xs text-[#ffb3b5] tracking-widest uppercase flex items-center gap-1.5 font-bold">
+            <span className="w-2 h-2 bg-[#962333] inline-block rounded-full animate-ping" />
+            SPIDER-SENSE CENTRAL HUB
+          </div>
+          <h1 className="font-mono-tech text-3xl md:text-4xl font-extrabold tracking-tight text-white uppercase mt-0.5">
             Command Central
           </h1>
           <p className="font-mono-tech text-xs text-[#debfbf] tracking-wider mt-1">
-            SECURE LINK ESTABLISHED // SYSTEM NOMINAL // WAITING FOR DIRECTIVES
+            SECURE RE-BROADCAST LINK ESTABLISHED // REAL-TIME DISPATCH RADAR ACTIVE
           </p>
         </div>
 
-        <div className="font-mono-tech text-right text-xs space-y-0.5">
+        <div className="font-mono-tech text-right text-xs space-y-0.5 bg-[#20252C] p-3 rounded-sm border border-[#343339]">
           <div className="text-[#debfbf]">
-            CURRENT UPTIME:{' '}
+            SYSTEM UPTIME:{' '}
             <span className="text-[#ffb3b5] font-bold">{formatUptime(uptimeSeconds)}</span>
           </div>
-          <div className="text-[11px] text-[#a68a8a]">LAST SYNC: JUST NOW</div>
+          <div className="text-[11px] text-emerald-400 font-bold">SPATIAL RADAR: ONLINE</div>
         </div>
       </div>
 
       {/* 4 Stat Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric 1 */}
-        <div className="bg-[#20252C] border border-[#343339] p-5 rounded-sm flex flex-col justify-between h-32 hover:border-[#ff3b53]/50 transition-all spider-web-card">
+        <div className="bg-[#20252C] border border-[#343339] p-5 rounded-sm flex flex-col justify-between h-32 hover:border-[#962333] transition-all group">
           <div className="flex justify-between items-center text-[#debfbf] font-mono-tech text-xs tracking-wider uppercase font-semibold">
-            <span>TOTAL ACTIVE</span>
-            <span className="material-symbols-outlined text-base">show_chart</span>
+            <span>TOTAL ACTIVE INCIDENTS</span>
+            <span className="material-symbols-outlined text-base text-[#ffb3b5] group-hover:scale-110 transition-transform">
+              sensors
+            </span>
           </div>
-          <div className="font-mono-tech text-4xl font-bold text-white tracking-tight">
+          <div className="font-mono-tech text-4xl font-extrabold text-white tracking-tight">
             1,204
+          </div>
+          <div className="text-[10px] font-mono-tech text-emerald-400">
+            ▲ +2.4% vs last 24h
           </div>
         </div>
 
         {/* Metric 2 (Critical L1) */}
-        <div className="bg-[#20252C] border-2 border-[#962333] p-5 rounded-sm flex flex-col justify-between h-32 relative overflow-hidden bg-gradient-to-b from-[#20252C] to-[#291d1d] spider-web-glow spider-web-card">
+        <div className="bg-[#20252C] border-2 border-[#962333] p-5 rounded-sm flex flex-col justify-between h-32 relative overflow-hidden bg-gradient-to-b from-[#20252C] to-[#291d1d] shadow-[0_0_20px_rgba(150,35,51,0.3)]">
           <div className="flex justify-between items-center text-[#ffb3b5] font-mono-tech text-xs tracking-wider uppercase font-bold">
             <span className="flex items-center gap-1">
-              CRITICAL (L1)
+              CRITICAL EMERGENCY (L1)
             </span>
             <span className="material-symbols-outlined text-base text-[#ff3b53] animate-pulse">
               warning
@@ -127,28 +136,41 @@ export const CommandCentralView: React.FC<CommandCentralViewProps> = ({
           <div className="font-mono-tech text-4xl font-extrabold text-[#ff3b53] tracking-tight drop-shadow">
             14
           </div>
-          <div className="absolute top-1 right-1 w-2 h-2 bg-[#962333] rounded-full animate-ping" />
+          <div className="text-[10px] font-mono-tech text-[#ffb3b5] font-bold">
+            ⚡ RAPID DISPATCH ACTIVE
+          </div>
+          <div className="absolute top-1 right-1 w-2.5 h-2.5 bg-[#962333] rounded-full animate-ping" />
         </div>
 
         {/* Metric 3 (High Priority L2) */}
-        <div className="bg-[#20252C] border border-[#343339] p-5 rounded-sm flex flex-col justify-between h-32 hover:border-[#962333]/50 transition-colors spider-web-card">
+        <div className="bg-[#20252C] border border-[#343339] p-5 rounded-sm flex flex-col justify-between h-32 hover:border-[#962333]/50 transition-colors group">
           <div className="flex justify-between items-center text-[#debfbf] font-mono-tech text-xs tracking-wider uppercase font-semibold">
             <span>HIGH PRIORITY (L2)</span>
-            <span className="material-symbols-outlined text-base text-[#ffb3b5]">priority_high</span>
+            <span className="material-symbols-outlined text-base text-[#ffb3b5] group-hover:scale-110 transition-transform">
+              priority_high
+            </span>
           </div>
           <div className="font-mono-tech text-4xl font-bold text-[#ffb3b5] tracking-tight">
             42
           </div>
+          <div className="text-[10px] font-mono-tech text-[#debfbf]">
+            ● 8 units en route
+          </div>
         </div>
 
         {/* Metric 4 (Monitor L3) */}
-        <div className="bg-[#20252C] border border-[#343339] p-5 rounded-sm flex flex-col justify-between h-32 hover:border-[#574142] transition-colors spider-web-card">
+        <div className="bg-[#20252C] border border-[#343339] p-5 rounded-sm flex flex-col justify-between h-32 hover:border-[#574142] transition-colors group">
           <div className="flex justify-between items-center text-[#debfbf] font-mono-tech text-xs tracking-wider uppercase font-semibold">
-            <span>MONITOR (L3)</span>
-            <span className="material-symbols-outlined text-base">visibility</span>
+            <span>MONITOR & STANDBY (L3)</span>
+            <span className="material-symbols-outlined text-base text-[#debfbf] group-hover:scale-110 transition-transform">
+              visibility
+            </span>
           </div>
           <div className="font-mono-tech text-4xl font-bold text-white tracking-tight">
             118
+          </div>
+          <div className="text-[10px] font-mono-tech text-slate-400">
+            ✓ Automated telemetry
           </div>
         </div>
       </div>
@@ -158,10 +180,11 @@ export const CommandCentralView: React.FC<CommandCentralViewProps> = ({
         <div className="flex items-center justify-between mb-4 border-b border-[#343339] pb-3">
           <div className="font-mono-tech text-xs tracking-widest uppercase text-white font-bold flex items-center gap-2">
             <span className="w-2 h-2 bg-[#962333] inline-block rounded-xs animate-pulse"></span>
-            GLOBAL THREAT VECTOR
+            SPATIAL THREAT VECTOR RADAR
           </div>
-          <div className="font-mono-tech text-[10px] text-[#debfbf]">
-            MAP GRID // SECURE TRANSMISSION
+          <div className="font-mono-tech text-[10px] text-[#debfbf] flex items-center gap-2">
+            <span className="text-[#ffb3b5]">POSTGIS GEOGRAPHY: ACTIVE</span>
+            <span>// RADAR SWEEP 4.8 GHz</span>
           </div>
         </div>
 
@@ -189,31 +212,26 @@ export const CommandCentralView: React.FC<CommandCentralViewProps> = ({
             />
 
             {/* Stylized Tactical Continent Silhouettes */}
-            {/* North America */}
             <path
               d="M150 120 L280 110 L320 220 L240 280 L180 220 L120 180 Z"
               fill="#3f3132"
               stroke="#574142"
             />
-            {/* South America */}
             <path
               d="M280 300 L340 320 L310 440 L260 410 L250 340 Z"
               fill="#3f3132"
               stroke="#574142"
             />
-            {/* Europe & Asia */}
             <path
               d="M450 100 L750 90 L880 180 L820 300 L650 280 L520 240 L440 180 Z"
               fill="#3f3132"
               stroke="#574142"
             />
-            {/* Africa */}
             <path
               d="M480 230 L580 240 L600 360 L520 420 L460 320 Z"
               fill="#3f3132"
               stroke="#574142"
             />
-            {/* Australia */}
             <path
               d="M780 340 L880 330 L900 420 L800 430 Z"
               fill="#3f3132"
@@ -221,10 +239,10 @@ export const CommandCentralView: React.FC<CommandCentralViewProps> = ({
             />
           </svg>
 
-          {/* Glowing Red Radar Sweeper */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(150,35,51,0.15),transparent_70%)] pointer-events-none" />
+          {/* Radar Sweeper */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(150,35,51,0.2),transparent_70%)] pointer-events-none" />
 
-          {/* Threat Interactive Markers */}
+          {/* Threat Markers */}
           {threatNodes.map((node) => (
             <div
               key={node.id}
